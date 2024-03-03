@@ -5,6 +5,7 @@ let msg = document.querySelector("h1");
 let reset = document.querySelector("#reset");
 let newGameBtn = document.querySelector("#newGame");
 let cancelBtn = document.querySelector("#cancel");
+let count = 0 ; 
 
 let winPattern = [
     [0,1,2],
@@ -21,16 +22,27 @@ boxes.forEach((box)=>{
     box.addEventListener('click',()=>{
         if(turnX){
             box.innerText = "X";
-            turnX = false
+            box.style.color = "#C14953";
+            turnX = false;
+            count = count+1;
         }else{
             box.innerText = '0';
+           box.style.color = "#4C4C47"
             turnX = true;
+            count = count+1;
         }
         box.disabled = true;
-        checkwinner();
+        if(checkwinner()){
+            
+        }else if(count === 9){
+            msgDiv.style.display = "flex";
+            msg.innerText = 'The Game is Draw';
+            disableBtn();
+        }
+        
     })
-
 })
+
  const disableBtn = ()=>{
     for(let box of boxes){
         box.disabled = true;
@@ -47,6 +59,7 @@ boxes.forEach((box)=>{
  const resetGame = ()=>{
     turnX = true;
     enableBtn();
+    count = 0;
     }
 
 const checkwinner = ()=>{
